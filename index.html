@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>スワイプ型ランディングページ</title>
+  <title>ATELIER LUXE - 高級ブランド専門お直しサービス</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -12,12 +15,14 @@
     }
 
     body {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Noto Serif JP', serif;
       overflow: hidden;
       touch-action: pan-y;
       position: fixed;
       width: 100%;
       height: 100%;
+      color: #333;
+      background-color: #f8f8f8;
     }
 
     .slider-container {
@@ -30,7 +35,7 @@
     .slider {
       display: flex;
       height: 100%;
-      transition: transform 0.5s ease-out;
+      transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
     .slide {
@@ -42,53 +47,131 @@
       align-items: center;
       padding: 2rem;
       text-align: center;
+      position: relative;
+    }
+
+    .slide-content {
+      max-width: 1200px;
+      width: 100%;
+      z-index: 2;
+      padding: 2rem;
     }
 
     .slide h2 {
-      font-size: 2.5rem;
+      font-family: 'Playfair Display', 'Noto Serif JP', serif;
+      font-size: 2.8rem;
       margin-bottom: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #1a1a1a;
+    }
+
+    .slide h3 {
+      font-family: 'Playfair Display', 'Noto Serif JP', serif;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: #333;
     }
 
     .slide p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       max-width: 800px;
-      line-height: 1.6;
-      margin-bottom: 2rem;
+      line-height: 1.8;
+      margin: 0 auto 2rem;
     }
 
     .slide-1 {
-      background-color: #f8f9fa;
-      color: #212529;
+      background-color: #f8f5f0;
+    }
+
+    .slide-1::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%23d4b78f" stroke-width="0.5"/></svg>');
+      opacity: 0.3;
+      z-index: 1;
     }
 
     .slide-2 {
-      background-color: #e9ecef;
-      color: #212529;
+      background-color: #f0f0f0;
     }
 
     .slide-3 {
-      background-color: #dee2e6;
-      color: #212529;
+      background-color: #f8f8f8;
     }
 
     .slide-4 {
-      background-color: #ced4da;
-      color: #212529;
+      background-color: #f0f0f0;
+    }
+
+    .slide-5 {
+      background-color: #1a1a1a;
+      color: #f8f5f0;
+    }
+
+    .slide-5 h2, .slide-5 h3 {
+      color: #f8f5f0;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+    }
+
+    .tagline {
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      margin-bottom: 3rem;
+      color: #666;
     }
 
     .btn {
-      padding: 0.8rem 1.5rem;
-      background-color: #0d6efd;
+      padding: 1rem 2.5rem;
+      background-color: #1a1a1a;
       color: white;
       border: none;
-      border-radius: 4px;
+      font-family: 'Noto Serif JP', serif;
       font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+      display: inline-block;
+      margin-top: 1rem;
     }
 
     .btn:hover {
-      background-color: #0b5ed7;
+      background-color: #333;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid #1a1a1a;
+      color: #1a1a1a;
+    }
+
+    .btn-outline:hover {
+      background-color: #1a1a1a;
+      color: white;
+    }
+
+    .slide-5 .btn {
+      background-color: #d4b78f;
+      color: #1a1a1a;
+    }
+
+    .slide-5 .btn:hover {
+      background-color: #c4a77f;
     }
 
     .pagination {
@@ -98,20 +181,30 @@
       right: 0;
       display: flex;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
+      z-index: 10;
     }
 
     .pagination-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(26, 26, 26, 0.3);
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: all 0.3s;
     }
 
     .pagination-dot.active {
-      background-color: white;
+      background-color: rgba(26, 26, 26, 0.8);
+      transform: scale(1.2);
+    }
+
+    .slide-5 .pagination-dot {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .slide-5 .pagination-dot.active {
+      background-color: rgba(255, 255, 255, 0.8);
     }
 
     .swipe-hint {
@@ -120,9 +213,14 @@
       left: 0;
       right: 0;
       text-align: center;
-      color: rgba(0, 0, 0, 0.5);
+      color: rgba(26, 26, 26, 0.5);
       font-size: 0.9rem;
       animation: fadeInOut 2s infinite;
+      letter-spacing: 1px;
+    }
+
+    .slide-5 .swipe-hint {
+      color: rgba(255, 255, 255, 0.5);
     }
 
     @keyframes fadeInOut {
@@ -130,13 +228,156 @@
       50% { opacity: 1; }
     }
 
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .service-item {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 2rem;
+      border: 1px solid #e0e0e0;
+      transition: all 0.3s;
+    }
+
+    .service-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #d4b78f;
+    }
+
+    .features-list {
+      display: flex;
+      justify-content: space-between;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      flex: 0 0 48%;
+      margin-bottom: 2rem;
+      text-align: left;
+      padding: 0 1rem;
+    }
+
+    .feature h4 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .feature h4::before {
+      content: '✓';
+      margin-right: 0.5rem;
+      color: #d4b78f;
+      font-weight: bold;
+    }
+
+    .brands-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .brand-item {
+      flex: 0 0 calc(25% - 2rem);
+      padding: 1.5rem;
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: #1a1a1a;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: space-between;
+      margin: 2rem 0;
+    }
+
+    .contact-col {
+      flex: 0 0 48%;
+      text-align: left;
+    }
+
+    .contact-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #d4b78f;
+    }
+
+    .gold-accent {
+      color: #d4b78f;
+    }
+
+    @media (max-width: 1024px) {
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .brand-item {
+        flex: 0 0 calc(33.33% - 2rem);
+      }
+    }
+
     @media (max-width: 768px) {
       .slide h2 {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
+      }
+      
+      .logo {
+        font-size: 2.8rem;
+      }
+      
+      .tagline {
+        font-size: 1.1rem;
       }
       
       .slide p {
         font-size: 1rem;
+      }
+      
+      .service-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .feature {
+        flex: 0 0 100%;
+      }
+      
+      .brand-item {
+        flex: 0 0 calc(50% - 2rem);
+      }
+      
+      .contact-info {
+        flex-direction: column;
+      }
+      
+      .contact-col {
+        flex: 0 0 100%;
+        margin-bottom: 2rem;
       }
     }
   </style>
@@ -144,25 +385,145 @@
 <body>
   <div class="slider-container">
     <div class="slider">
+      <!-- スライド1: ヒーローセクション -->
       <div class="slide slide-1">
-        <h2>ようこそ</h2>
-        <p>スワイプ型ランディングページへようこそ。左右にスワイプして次のコンテンツをご覧ください。</p>
-        <button class="btn">詳細を見る</button>
+        <div class="slide-content">
+          <div class="logo">ATELIER LUXE</div>
+          <div class="tagline">高級ブランド専門お直しアトリエ</div>
+          <p>ラグジュアリーブランドの洋服を熟練の技術で蘇らせます。<br>一流の技術者による丁寧な仕立て直しで、大切なお洋服に新たな命を。</p>
+          <button class="btn">ご相談・お見積り</button>
+        </div>
       </div>
+      
+      <!-- スライド2: サービス紹介 -->
       <div class="slide slide-2">
-        <h2>特徴</h2>
-        <p>このランディングページは、モバイルフレンドリーなスワイプ機能を備えています。タッチデバイスでは指でスワイプ、デスクトップではマウスでドラッグできます。</p>
-        <button class="btn">機能を確認</button>
+        <div class="slide-content">
+          <h2>サービス内容</h2>
+          <p>高級ブランド専門のお直しサービスを提供しています。<br>熟練の技術者が一点一点丁寧にお直しいたします。</p>
+          
+          <div class="service-grid">
+            <div class="service-item">
+              <div class="service-icon">✂️</div>
+              <h3>サイズ調整</h3>
+              <p>体型の変化に合わせたサイズ調整。ブランドの縫製技術を忠実に再現します。</p>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">🧵</div>
+              <h3>リペア</h3>
+              <p>破れや傷みの修復。目立たない補修で大切なお洋服を長くご愛用いただけます。</p>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">👔</div>
+              <h3>リフォーム</h3>
+              <p>デザイン変更やモデルチェンジ。新しいスタイルへと生まれ変わらせます。</p>
+            </div>
+          </div>
+          
+          <button class="btn btn-outline">詳細を見る</button>
+        </div>
       </div>
+      
+      <!-- スライド3: 特徴・強み -->
       <div class="slide slide-3">
-        <h2>シンプルな実装</h2>
-        <p>純粋なHTML、CSS、JavaScriptのみで実装されており、外部ライブラリは使用していません。GitHubでの運用に最適です。</p>
-        <button class="btn">コードを見る</button>
+        <div class="slide-content">
+          <h2>アトリエの強み</h2>
+          <p>ラグジュアリーブランドの洋服を知り尽くした<br>プロフェッショナルによる最高品質のお直しをご提供します。</p>
+          
+          <div class="features-list">
+            <div class="feature">
+              <h4>熟練の技術者</h4>
+              <p>一流メゾンで経験を積んだ技術者が、ブランドごとの特性を理解した上で丁寧に仕上げます。</p>
+            </div>
+            <div class="feature">
+              <h4>高品質な素材</h4>
+              <p>オリジナルに近い素材や、時には同じブランドから取り寄せた素材を使用し、違和感のない仕上がりを実現。</p>
+            </div>
+            <div class="feature">
+              <h4>細部へのこだわり</h4>
+              <p>ステッチの間隔、ボタンの付け方、裏地の処理まで、ブランドの縫製技術を忠実に再現します。</p>
+            </div>
+            <div class="feature">
+              <h4>安心の保証</h4>
+              <p>お直し後の仕上がりに満足いただけない場合は、無料で再調整いたします。</p>
+            </div>
+          </div>
+          
+          <button class="btn">お客様の声を見る</button>
+        </div>
       </div>
+      
+      <!-- スライド4: 実績・事例 -->
       <div class="slide slide-4">
-        <h2>お問い合わせ</h2>
-        <p>ご質問やご相談がありましたら、お気軽にお問い合わせください。</p>
-        <button class="btn">お問い合わせ</button>
+        <div class="slide-content">
+          <h2>取扱ブランド</h2>
+          <p>数多くの高級ブランドのお洋服を取り扱ってきた実績があります。<br>各ブランドの特性を熟知したお直しをご提供します。</p>
+          
+          <div class="brands-grid">
+            <div class="brand-item">
+              <div class="brand-name">CHANEL</div>
+            </div>
+            <div class="brand-item">
+              <div class="brand-name">HERMÈS</div>
+            </div>
+            <div class="brand-item">
+              <div class="brand-name">LOUIS VUITTON</div>
+            </div>
+            <div class="brand-item">
+              <div class="brand-name">GUCCI</div>
+            </div>
+            <div class="brand-item">
+              <div class="brand-name">DIOR</div>
+            </div>
+            <div class="brand-item">
+              <div class="brand-name">PRADA</div>
+            </div>
+            <div class="brand-item">
+              <div class="brand-name">BURBERRY</div>
+            </div>
+            <div class="brand-item">
+              <div class="brand-name">BALENCIAGA</div>
+            </div>
+          </div>
+          
+          <p>その他多数のブランドに対応しております。<br>お気軽にお問い合わせください。</p>
+        </div>
+      </div>
+      
+      <!-- スライド5: お問い合わせ -->
+      <div class="slide slide-5">
+        <div class="slide-content">
+          <h2>お問い合わせ</h2>
+          <p>大切なお洋服のお直しについて、お気軽にご相談ください。<br>丁寧にカウンセリングし、最適なお直し方法をご提案いたします。</p>
+          
+          <div class="contact-info">
+            <div class="contact-col">
+              <div class="contact-item">
+                <h4>アトリエ</h4>
+                <p>〒107-0062<br>東京都港区南青山5-1-1<br>ATELIER LUXE 青山本店</p>
+              </div>
+              <div class="contact-item">
+                <h4>営業時間</h4>
+                <p>火曜日〜土曜日 11:00〜19:00<br>日曜・月曜・祝日 休業</p>
+              </div>
+            </div>
+            <div class="contact-col">
+              <div class="contact-item">
+                <h4>お電話</h4>
+                <p>03-1234-5678</p>
+              </div>
+              <div class="contact-item">
+                <h4>メール</h4>
+                <p>info@atelier-luxe.jp</p>
+              </div>
+              <div class="contact-item">
+                <h4>予約制</h4>
+                <p>お持ち込み前に事前予約をお願いいたします。</p>
+              </div>
+            </div>
+          </div>
+          
+          <button class="btn">ご予約・お問い合わせ</button>
+        </div>
       </div>
     </div>
     
@@ -196,11 +557,7 @@
       const updateDotColors = () => {
         const dots = document.querySelectorAll('.pagination-dot');
         dots.forEach((dot, index) => {
-          if (index === currentIndex) {
-            dot.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-          } else {
-            dot.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
-          }
+          dot.classList.toggle('active', index === currentIndex);
         });
       };
       updateDotColors();
@@ -215,10 +572,6 @@
         slider.style.transform = `translateX(${translateX}%)`;
         
         // アクティブなドットを更新
-        document.querySelectorAll('.pagination-dot').forEach((dot, i) => {
-          dot.classList.toggle('active', i === index);
-        });
-        
         updateDotColors();
         
         // 最初のスワイプ後にヒントを非表示
