@@ -6,12 +6,24 @@
   <title>ATELIER LUXE - 高級ブランド専門お直しサービス</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@200;300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c9a875;
+      --gold-light: #d8bd91;
+      --gold-dark: #a88a5c;
+      --black: #111111;
+      --dark-gray: #333333;
+      --light-gray: #f8f8f8;
+      --cream: #f9f6f0;
+      --white: #ffffff;
+      --transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
     body {
@@ -21,8 +33,10 @@
       position: fixed;
       width: 100%;
       height: 100%;
-      color: #333;
-      background-color: #f8f8f8;
+      color: var(--dark-gray);
+      background-color: var(--light-gray);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .slider-container {
@@ -35,7 +49,8 @@
     .slider {
       display: flex;
       height: 100%;
-      transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+      will-change: transform;
     }
 
     .slide {
@@ -45,137 +60,188 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      padding: 0;
       text-align: center;
       position: relative;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .slide-content {
+    .slide-inner {
       max-width: 1200px;
       width: 100%;
-      z-index: 2;
-      padding: 2rem;
+      padding: 3rem 1.5rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100%;
     }
 
     .slide h2 {
-      font-family: 'Playfair Display', 'Noto Serif JP', serif;
-      font-size: 2.8rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
       margin-bottom: 1.5rem;
-      font-weight: 600;
+      font-weight: 500;
       letter-spacing: 1px;
-      color: #1a1a1a;
+      color: var(--black);
+      position: relative;
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    .slide h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background-color: var(--gold);
     }
 
     .slide h3 {
-      font-family: 'Playfair Display', 'Noto Serif JP', serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 1.8rem;
       margin-bottom: 1rem;
       font-weight: 500;
-      color: #333;
+      color: var(--dark-gray);
     }
 
     .slide p {
       font-size: 1.1rem;
+      font-weight: 300;
       max-width: 800px;
       line-height: 1.8;
       margin: 0 auto 2rem;
     }
 
+    /* スライド背景 */
     .slide-1 {
-      background-color: #f8f5f0;
-    }
-
-    .slide-1::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%23d4b78f" stroke-width="0.5"/></svg>');
-      opacity: 0.3;
-      z-index: 1;
+      background: linear-gradient(to right, rgba(249, 246, 240, 0.9), rgba(249, 246, 240, 0.8)), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a875' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
 
     .slide-2 {
-      background-color: #f0f0f0;
+      background-color: var(--white);
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23c9a875' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
     }
 
     .slide-3 {
-      background-color: #f8f8f8;
+      background-color: var(--cream);
+      background-image: linear-gradient(to bottom, rgba(249, 246, 240, 0.97), rgba(249, 246, 240, 0.97)), url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a875' fill-opacity='0.1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
     }
 
     .slide-4 {
-      background-color: #f0f0f0;
+      background-color: var(--white);
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.97)), url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a875' fill-opacity='0.07'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
 
     .slide-5 {
-      background-color: #1a1a1a;
-      color: #f8f5f0;
+      background-color: var(--black);
+      color: var(--cream);
+      background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.97), rgba(17, 17, 17, 0.97)), url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23c9a875' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
     }
 
     .slide-5 h2, .slide-5 h3 {
-      color: #f8f5f0;
+      color: var(--cream);
+    }
+
+    .slide-5 h2::after {
+      background-color: var(--gold);
+    }
+
+    .logo-container {
+      margin-bottom: 2rem;
     }
 
     .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      margin-bottom: 1rem;
-      color: #1a1a1a;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      letter-spacing: 6px;
+      margin-bottom: 0.5rem;
+      color: var(--black);
+      text-transform: uppercase;
     }
 
     .tagline {
-      font-size: 1.3rem;
-      font-weight: 300;
-      letter-spacing: 3px;
+      font-size: 1.1rem;
+      font-weight: 200;
+      letter-spacing: 4px;
       margin-bottom: 3rem;
-      color: #666;
+      color: var(--dark-gray);
+      position: relative;
+      display: inline-block;
+      padding: 0 2rem;
+    }
+
+    .tagline::before, .tagline::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 30px;
+      height: 1px;
+      background-color: var(--gold);
+    }
+
+    .tagline::before {
+      left: 0;
+    }
+
+    .tagline::after {
+      right: 0;
     }
 
     .btn {
       padding: 1rem 2.5rem;
-      background-color: #1a1a1a;
-      color: white;
-      border: none;
+      background-color: transparent;
+      color: var(--black);
+      border: 1px solid var(--gold);
       font-family: 'Noto Serif JP', serif;
-      font-size: 1rem;
+      font-size: 0.9rem;
+      font-weight: 300;
       cursor: pointer;
-      transition: all 0.3s;
-      letter-spacing: 1px;
+      transition: var(--transition);
+      letter-spacing: 2px;
       display: inline-block;
       margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background-color: var(--gold);
+      transition: var(--transition);
+      z-index: -1;
     }
 
     .btn:hover {
-      background-color: #333;
-      transform: translateY(-2px);
+      color: var(--white);
     }
 
-    .btn-outline {
-      background-color: transparent;
-      border: 1px solid #1a1a1a;
-      color: #1a1a1a;
-    }
-
-    .btn-outline:hover {
-      background-color: #1a1a1a;
-      color: white;
+    .btn:hover::before {
+      width: 100%;
     }
 
     .slide-5 .btn {
-      background-color: #d4b78f;
-      color: #1a1a1a;
+      border-color: var(--gold);
+      color: var(--cream);
     }
 
     .slide-5 .btn:hover {
-      background-color: #c4a77f;
+      color: var(--black);
     }
 
     .pagination {
-      position: absolute;
+      position: fixed;
       bottom: 2rem;
       left: 0;
       right: 0;
@@ -186,37 +252,42 @@
     }
 
     .pagination-dot {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background-color: rgba(26, 26, 26, 0.3);
+      background-color: rgba(17, 17, 17, 0.2);
+      border: 1px solid rgba(17, 17, 17, 0.3);
       cursor: pointer;
-      transition: all 0.3s;
+      transition: var(--transition);
     }
 
     .pagination-dot.active {
-      background-color: rgba(26, 26, 26, 0.8);
+      background-color: var(--gold);
+      border-color: var(--gold);
       transform: scale(1.2);
     }
 
     .slide-5 .pagination-dot {
-      background-color: rgba(255, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .slide-5 .pagination-dot.active {
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: var(--gold);
+      border-color: var(--gold);
     }
 
     .swipe-hint {
-      position: absolute;
+      position: fixed;
       bottom: 5rem;
       left: 0;
       right: 0;
       text-align: center;
-      color: rgba(26, 26, 26, 0.5);
-      font-size: 0.9rem;
+      color: rgba(17, 17, 17, 0.5);
+      font-size: 0.8rem;
       animation: fadeInOut 2s infinite;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      font-weight: 300;
     }
 
     .slide-5 .swipe-hint {
@@ -228,88 +299,135 @@
       50% { opacity: 1; }
     }
 
+    /* サービスグリッド */
     .service-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
-      margin: 2rem 0;
+      margin: 3rem 0;
     }
 
     .service-item {
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 2rem;
-      border: 1px solid #e0e0e0;
-      transition: all 0.3s;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 2.5rem 1.5rem;
+      border: 1px solid rgba(201, 168, 117, 0.1);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      transform: translateX(-100%);
+      transition: var(--transition);
     }
 
     .service-item:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+      border-color: rgba(201, 168, 117, 0.3);
+    }
+
+    .service-item:hover::before {
+      transform: translateX(0);
     }
 
     .service-icon {
       font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #d4b78f;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+      display: inline-block;
+      position: relative;
     }
 
+    .service-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 1px;
+      background-color: var(--gold-light);
+    }
+
+    /* 特徴リスト */
     .features-list {
       display: flex;
       justify-content: space-between;
-      margin: 2rem 0;
+      margin: 3rem 0;
       flex-wrap: wrap;
     }
 
     .feature {
       flex: 0 0 48%;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       text-align: left;
       padding: 0 1rem;
+      position: relative;
     }
 
     .feature h4 {
       font-size: 1.3rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
       display: flex;
       align-items: center;
+      font-weight: 400;
+      color: var(--dark-gray);
     }
 
     .feature h4::before {
-      content: '✓';
-      margin-right: 0.5rem;
-      color: #d4b78f;
-      font-weight: bold;
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 0.8rem;
+      background-color: var(--gold);
+      transform: rotate(45deg);
     }
 
+    /* ブランドグリッド */
     .brands-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin: 3rem 0;
     }
 
     .brand-item {
-      flex: 0 0 calc(25% - 2rem);
-      padding: 1.5rem;
-      background-color: white;
-      border: 1px solid #e0e0e0;
+      padding: 2rem 1rem;
+      background-color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(201, 168, 117, 0.1);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100px;
+      transition: var(--transition);
+    }
+
+    .brand-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+      border-color: rgba(201, 168, 117, 0.3);
     }
 
     .brand-name {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 1.2rem;
-      color: #1a1a1a;
+      color: var(--dark-gray);
+      letter-spacing: 1px;
     }
 
+    /* お問い合わせ */
     .contact-info {
       display: flex;
       justify-content: space-between;
-      margin: 2rem 0;
+      margin: 3rem 0;
     }
 
     .contact-col {
@@ -318,57 +436,131 @@
     }
 
     .contact-item {
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .contact-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 4px;
+      height: 4px;
+      background-color: var(--gold);
+      transform: rotate(45deg);
     }
 
     .contact-item h4 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       margin-bottom: 0.5rem;
-      color: #d4b78f;
+      color: var(--gold);
+      font-weight: 400;
     }
 
     .gold-accent {
-      color: #d4b78f;
+      color: var(--gold);
     }
 
-    @media (max-width: 1024px) {
-      .service-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+      margin: 2rem 0;
+    }
+
+    /* スクロールバーのカスタマイズ */
+    .slide::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .slide::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .slide::-webkit-scrollbar-thumb {
+      background-color: rgba(201, 168, 117, 0.3);
+      border-radius: 2px;
+    }
+
+    /* レスポンシブデザイン */
+    @media (max-width: 1200px) {
+      .slide-inner {
+        padding: 2.5rem 2rem;
       }
       
-      .brand-item {
-        flex: 0 0 calc(33.33% - 2rem);
+      .service-grid {
+        gap: 1.5rem;
+      }
+      
+      .brands-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .slide h2 {
+        font-size: 2.5rem;
+      }
+      
+      .logo {
+        font-size: 3.5rem;
+      }
+      
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
       }
     }
 
     @media (max-width: 768px) {
+      .slide-inner {
+        padding: 2rem 1.5rem;
+      }
+      
       .slide h2 {
         font-size: 2.2rem;
       }
       
+      .slide h3 {
+        font-size: 1.5rem;
+      }
+      
       .logo {
-        font-size: 2.8rem;
+        font-size: 3rem;
+        letter-spacing: 4px;
       }
       
       .tagline {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        letter-spacing: 3px;
+        padding: 0 1.5rem;
+      }
+      
+      .tagline::before, .tagline::after {
+        width: 20px;
       }
       
       .slide p {
         font-size: 1rem;
+        line-height: 1.7;
       }
       
       .service-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        margin: 2rem 0;
       }
       
       .feature {
         flex: 0 0 100%;
+        padding: 0;
       }
       
-      .brand-item {
-        flex: 0 0 calc(50% - 2rem);
+      .brands-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
       }
       
       .contact-info {
@@ -377,7 +569,128 @@
       
       .contact-col {
         flex: 0 0 100%;
+        margin-bottom: 1.5rem;
+      }
+      
+      .btn {
+        padding: 0.9rem 2rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .slide-inner {
+        padding: 1.5rem 1rem;
+      }
+      
+      .slide h2 {
+        font-size: 1.8rem;
+      }
+      
+      .slide h3 {
+        font-size: 1.3rem;
+      }
+      
+      .logo {
+        font-size: 2.5rem;
+        letter-spacing: 3px;
+      }
+      
+      .tagline {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
         margin-bottom: 2rem;
+      }
+      
+      .slide p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      
+      .service-item {
+        padding: 2rem 1rem;
+      }
+      
+      .feature h4 {
+        font-size: 1.1rem;
+      }
+      
+      .feature p {
+        font-size: 0.9rem;
+      }
+      
+      .brands-grid {
+        gap: 0.8rem;
+      }
+      
+      .brand-item {
+        padding: 1.5rem 0.8rem;
+      }
+      
+      .brand-name {
+        font-size: 1rem;
+      }
+      
+      .contact-item {
+        margin-bottom: 1.5rem;
+      }
+      
+      .contact-item h4 {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 0.8rem 1.8rem;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+      
+      .pagination {
+        bottom: 1.5rem;
+      }
+      
+      .pagination-dot {
+        width: 6px;
+        height: 6px;
+      }
+      
+      .swipe-hint {
+        bottom: 4rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* 縦向きモバイル用の追加調整 */
+    @media (max-height: 700px) and (max-width: 576px) {
+      .slide-inner {
+        padding-top: 1rem;
+        padding-bottom: 4rem;
+      }
+      
+      .logo {
+        font-size: 2.2rem;
+        margin-bottom: 0.3rem;
+      }
+      
+      .tagline {
+        margin-bottom: 1.5rem;
+      }
+      
+      .slide h2 {
+        margin-bottom: 1rem;
+      }
+      
+      .service-grid, .features-list, .brands-grid, .contact-info {
+        margin: 1.5rem 0;
+      }
+      
+      .pagination {
+        bottom: 1rem;
+      }
+      
+      .swipe-hint {
+        bottom: 3.5rem;
       }
     }
   </style>
@@ -387,9 +700,11 @@
     <div class="slider">
       <!-- スライド1: ヒーローセクション -->
       <div class="slide slide-1">
-        <div class="slide-content">
-          <div class="logo">ATELIER LUXE</div>
-          <div class="tagline">高級ブランド専門お直しアトリエ</div>
+        <div class="slide-inner">
+          <div class="logo-container">
+            <div class="logo">ATELIER LUXE</div>
+            <div class="tagline">高級ブランド専門お直しアトリエ</div>
+          </div>
           <p>ラグジュアリーブランドの洋服を熟練の技術で蘇らせます。<br>一流の技術者による丁寧な仕立て直しで、大切なお洋服に新たな命を。</p>
           <button class="btn">ご相談・お見積り</button>
         </div>
@@ -397,7 +712,7 @@
       
       <!-- スライド2: サービス紹介 -->
       <div class="slide slide-2">
-        <div class="slide-content">
+        <div class="slide-inner">
           <h2>サービス内容</h2>
           <p>高級ブランド専門のお直しサービスを提供しています。<br>熟練の技術者が一点一点丁寧にお直しいたします。</p>
           
@@ -419,13 +734,13 @@
             </div>
           </div>
           
-          <button class="btn btn-outline">詳細を見る</button>
+          <button class="btn">詳細を見る</button>
         </div>
       </div>
       
       <!-- スライド3: 特徴・強み -->
       <div class="slide slide-3">
-        <div class="slide-content">
+        <div class="slide-inner">
           <h2>アトリエの強み</h2>
           <p>ラグジュアリーブランドの洋服を知り尽くした<br>プロフェッショナルによる最高品質のお直しをご提供します。</p>
           
@@ -448,13 +763,15 @@
             </div>
           </div>
           
+          <div class="divider"></div>
+          
           <button class="btn">お客様の声を見る</button>
         </div>
       </div>
       
       <!-- スライド4: 実績・事例 -->
       <div class="slide slide-4">
-        <div class="slide-content">
+        <div class="slide-inner">
           <h2>取扱ブランド</h2>
           <p>数多くの高級ブランドのお洋服を取り扱ってきた実績があります。<br>各ブランドの特性を熟知したお直しをご提供します。</p>
           
@@ -485,13 +802,15 @@
             </div>
           </div>
           
+          <div class="divider"></div>
+          
           <p>その他多数のブランドに対応しております。<br>お気軽にお問い合わせください。</p>
         </div>
       </div>
       
       <!-- スライド5: お問い合わせ -->
       <div class="slide slide-5">
-        <div class="slide-content">
+        <div class="slide-inner">
           <h2>お問い合わせ</h2>
           <p>大切なお洋服のお直しについて、お気軽にご相談ください。<br>丁寧にカウンセリングし、最適なお直し方法をご提案いたします。</p>
           
@@ -521,6 +840,8 @@
               </div>
             </div>
           </div>
+          
+          <div class="divider"></div>
           
           <button class="btn">ご予約・お問い合わせ</button>
         </div>
